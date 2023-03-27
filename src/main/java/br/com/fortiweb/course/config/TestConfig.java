@@ -6,6 +6,7 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import br.com.fortiweb.course.entities.Category;
 import br.com.fortiweb.course.entities.Order;
@@ -18,7 +19,7 @@ import br.com.fortiweb.course.repositories.ProductRepository;
 import br.com.fortiweb.course.repositories.UserRepository;
 
 @Configuration
-//@Profile("test")
+@Profile("test")
 public class TestConfig implements CommandLineRunner {
 	
 	@Autowired
@@ -48,6 +49,18 @@ public class TestConfig implements CommandLineRunner {
 		Product p5 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
 		
 		productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
+		
+		p1.getCategories().add(cat2);
+		p2.getCategories().add(cat1);
+		p2.getCategories().add(cat3);
+		p3.getCategories().add(cat3);
+		p4.getCategories().add(cat3);
+		p5.getCategories().add(cat2);
+		
+		productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
+		
+		
+		
 		
 		User u1 = new User(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
 		User u2 = new User(null, "Alex Green", "alex@gmail.com", "977777777", "123456");
