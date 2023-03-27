@@ -36,7 +36,7 @@ public class Order implements Serializable {
 
 	private Integer orderStatus;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "client_id")
 	private User client;
 	
