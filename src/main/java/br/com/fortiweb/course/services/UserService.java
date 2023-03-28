@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import br.com.fortiweb.course.entities.User;
 import br.com.fortiweb.course.repositories.UserRepository;
+import br.com.fortiweb.course.services.exceptions.DatabaseException;
 import br.com.fortiweb.course.services.exceptions.ResourceNotFoundException;
 
 
@@ -32,7 +34,11 @@ public class UserService {
 	}
 	
 	public void delete(Long id) {
-		repository.deleteById(id);
+		try {
+			repository.delete(findById(id));
+		} catch (DataIntegrityViolationException ex) {
+			throw new DatabaseException(ex.getMessage());
+		}
 	}
 	
 	public User update(Long id, User obj) {
